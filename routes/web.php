@@ -27,7 +27,12 @@ Route::post('/teacherlogin', [LoginController::class, 'loginTeacher'])->name('lo
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/teacher/dashboard', [DashboardController::class, 'gotoTeacherDashboard'])->name('gotoTeacherDashboard');
+Route::get('/teacher/dashboard/classschedule', [DashboardController::class, 'gotoTeacherClassSchedule'])->name('gotoTeacherClassSchedule');
+Route::post('/teacher/dashboard/classschedule', [DashboardController::class, 'gotoTeacherClassScheduleStore'])->name('gotoTeacherClassSchedule.store');
+Route::delete('/teacher/dashboard/classschedule/{id}/destroy', [DashboardController::class, 'courses_schedule_destroy'])->name('courses_schedule.destroy');
+
 Route::get('/student/dashboard', [DashboardController::class, 'gotoStudentDashboard'])->name('gotoStudentDashboard');
+Route::get('/student/dashboard/classschedule', [DashboardController::class, 'gotoStudentClassSchedule'])->name('gotoStudentClassSchedule');
 Route::get('/student/dashboard/result', [DashboardController::class, 'gotoStudentResult'])->name('gotoResult');
 Route::get('/admin/dashboard', [DashboardController::class, 'gotoAdminDashboard'])->name('gotoAdminDashboard');
 

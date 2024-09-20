@@ -4,10 +4,8 @@
 <head>
     <title>Student List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
     <style>
         /* Custom CSS if needed */
-       
     </style>
 </head>
 
@@ -17,6 +15,32 @@
             <h1>Student List</h1>
             <a href="{{ route('gotoStudentSignupPage') }}" class="btn btn-primary">Add Student</a>
         </div>
+
+        <!-- Filter Form -->
+        <form method="GET" action="{{ route('gotoAdminStudent') }}" class="mb-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <select name="level" class="form-select">
+                        <option value="">Select Level</option>
+                        <option value="1" {{ request('level') == '1' ? 'selected' : '' }}>Level 1</option>
+                        <option value="2" {{ request('level') == '2' ? 'selected' : '' }}>Level 2</option>
+                        <option value="3" {{ request('level') == '3' ? 'selected' : '' }}>Level 3</option>
+                        <option value="4" {{ request('level') == '4' ? 'selected' : '' }}>Level 4</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="semester" class="form-select">
+                        <option value="">Select Semester</option>
+                        <option value="i" {{ request('semester') == '1' ? 'selected' : '' }}>Semester 1</option>
+                        <option value="ii" {{ request('semester') == '2' ? 'selected' : '' }}>Semester 2</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="{{ route('gotoAdminStudent') }}" class="btn btn-secondary">Clear</a>
+                </div>
+            </div>
+        </form>
 
         <!-- Success Message -->
         <div>

@@ -27,6 +27,49 @@
             @endif
         </div>
 
+        <!-- Filter Form -->
+        <form method="GET" action="{{ route('gotoAdminCourse') }}" class="mb-4">
+            <div class="row">
+                <div class="col-md-2">
+                    <select name="level" class="form-select">
+                        <option value="">Select Level</option>
+                        <option value="1" {{ request('level') == '1' ? 'selected' : '' }}>Level 1</option>
+                        <option value="2" {{ request('level') == '2' ? 'selected' : '' }}>Level 2</option>
+                        <option value="3" {{ request('level') == '3' ? 'selected' : '' }}>Level 3</option>
+                        <option value="4" {{ request('level') == '4' ? 'selected' : '' }}>Level 4</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="semester" class="form-select">
+                        <option value="">Select Semester</option>
+                        <option value="i" {{ request('semester') == 'i' ? 'selected' : '' }}>Semester I</option>
+                        <option value="ii" {{ request('semester') == 'ii' ? 'selected' : '' }}>Semester II</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="credit_hour" class="form-select">
+                        <option value="">Select Credit</option>
+                        <option value="0.75" {{ request('credit_hour') == '0.75' ? 'selected' : '' }}>0.75</option>
+                        <option value="1" {{ request('credit_hour') == '1' ? 'selected' : '' }}>1</option>
+                        <option value="1.5" {{ request('credit_hour') == '1.5' ? 'selected' : '' }}>1.5</option>
+                        <option value="2" {{ request('credit_hour') == '2' ? 'selected' : '' }}>2</option>
+                        <option value="3" {{ request('credit_hour') == '3' ? 'selected' : '' }}>3</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="type" class="form-select">
+                        <option value="">Select Type</option>
+                        <option value="Theory" {{ request('type') == 'Theory' ? 'selected' : '' }}>Theory</option>
+                        <option value="Sessional" {{ request('type') == 'Sessional' ? 'selected' : '' }}>Sessional</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-center">
+                    <button type="submit" class="btn btn-primary me-2">Filter</button>
+                    <a href="{{ route('gotoAdminCourse') }}" class="btn btn-secondary">Clear</a>
+                </div>
+            </div>
+        </form>
+
         <!-- Course List Table -->
         <div class="table-container">
             <table class="table table-bordered table-striped table-hover text-center" style="width:100%">

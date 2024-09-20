@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class cgpa extends Model
+class Cgpa extends Model
 {
     use HasFactory;
-    protected $guarded = ['created_at','updated_at'];    
+    protected $table = 'cgpa';
+    protected $guarded = ['created_at', 'updated_at'];
 }
