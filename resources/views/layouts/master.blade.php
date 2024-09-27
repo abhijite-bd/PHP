@@ -65,7 +65,7 @@
                         <a href="{{ route('gotoAdminDashboard') }}" class="block py-2 px-3 {{ request()->routeIs('gotoAdminDashboard') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Dashboard</a>
                     </li>
                     <li>
-                        <a href="{{ route('routine.upload.page') }}" class="block py-2 px-3 {{ request()->routeIs('routine.upload.page') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Upload Routine</a>
+                        <a href="{{ route('routine.upload.page') }}" class="block py-2 px-3 {{ request()->routeIs('routine.upload.page') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page"> Routine</a>
                     </li>
                     <li>
                         <button id="UsersNavbarLink" data-dropdown-toggle="UsersNavbar" class="{{ request()->routeIs('gotoAdminSignupPage') || request()->routeIs('gotoTeacherSignupPage') || request()->routeIs('gotoStudentSignupPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} flex items-center justify-between w-full py-2 px-3 rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent">
@@ -107,6 +107,9 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                    <li>
+                        <a href="{{ route('resultValidation') }}" class="block py-2 px-3 {{ request()->routeIs('routine.upload.page') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Result Validation</a>
                     </li>
                     @elseif(session('user_role') == 'Teacher')
                     <li>

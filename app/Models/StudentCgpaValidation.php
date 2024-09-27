@@ -5,11 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cgpa extends Model
+class StudentCgpaValidation extends Model
 {
     use HasFactory;
-    protected $table = 'cgpas';
+    protected $table = 'student_cgpa_validation';
     protected $fillable = [
-        's_id', 'sem1', 'sem2', 'sem3', 'sem4', 'sem5', 'sem6', 'sem7', 'sem8', 'valid'
+        's_id',
+        'level',
+        'semester',
+        'cgpa',
+        'done',
     ];
 }

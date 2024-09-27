@@ -8,7 +8,7 @@
             <a href="{{ route('gotoUploadAssignmentByTeacherPage', ['code' => $course->code, 'session' => $session]) }}" class="block py-2 px-3 {{ request()->routeIs('addAssignment') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Add Assignment</a>
         </li>
         <li>
-            <a href="{{ route('gotoUploadAssignmentByTeacherPage', ['code' => $course->code, 'session' => $session]) }}" class="block py-2 px-3 {{ request()->routeIs('addAssignment') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Add Class Schedule</a>
+            <a href="{{ route('gotoTeacherClassSchedule', ['code' => $course->code, 'session' => $session]) }}" class="block py-2 px-3 {{ request()->routeIs('addAssignment') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Add Class Schedule</a>
         </li>
 @endsection
 

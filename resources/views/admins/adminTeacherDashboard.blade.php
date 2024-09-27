@@ -25,8 +25,8 @@
                     <select name="department" class="form-select">
                         <option value="">Select Department</option>
                         <option value="1" {{ request('department') == '1' ? 'selected' : '' }}>CSE</option>
-                        <option value="2" {{ request('department') == '2' ? 'selected' : '' }}>ECE</option>
-                        <option value="3" {{ request('department') == '3' ? 'selected' : '' }}>EEE</option>
+                        <option value="2" {{ request('department') == '2' ? 'selected' : '' }}>EEE</option>
+                        <option value="3" {{ request('department') == '3' ? 'selected' : '' }}>ECE</option>
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -76,9 +76,9 @@
                             @if($teacher->department == 1)
                                 CSE
                             @elseif($teacher->department == 2)
-                                ECE
-                            @elseif($teacher->department == 3)
                                 EEE
+                            @elseif($teacher->department == 3)
+                                ECE
                             @endif
                         </td>
                         <td>{{ $teacher->email }}</td>

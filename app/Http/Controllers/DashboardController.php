@@ -16,7 +16,9 @@ use App\Models\cgpa;
 use App\Models\Course_Schedule;
 use App\Models\Department;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
+use App\Models\StudentCgpaValidation;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -27,19 +29,111 @@ class DashboardController extends Controller
     }
     public function gotoStudentResult(Request $request)
     {
-        $user = Session::get('curr_user');
-        $user_email = $user->email;
-        $s_id = DB::table('students')
-            ->where('email', $user_email)
-            ->value('s_id');
-        $courses = Course::all();
-
-        // Get the CGPA data for this student
-        // $cgpa = Cgpa::find($s_id);
-        // dd($cgpa);
-
-        return view('students.resultpage', compact('s_id', 'cgpa', 'courses'));
+        return view('students.resultpage');
     }
+    public function cgpastore(Request $request)
+    {
+        $user = Session::get('curr_user');
+        $s_id = $user->s_id;
+        // dd($id);
+        // Only save the CGPA fields that have values
+        $data = $request->only(['l1s1', 'l1s2', 'l2s1', 'l2s2', 'l3s1', 'l3s2', 'l4s1', 'l4s2']);
+        $data['s_id'] = $s_id;
+
+        // Save or update the CGPA data for the user
+        Cgpa::updateOrCreate(
+            ['s_id' => $s_id],
+            $data
+        );
+        return redirect()->route('cgpa.form')->with('success', 'CGPA data saved successfully!');
+    }
+    public function validateCgpareq(Request $request)
+    {
+        $user = Session::get('curr_user');
+        $s_id = $user->s_id;
+
+        // Update the 'valid' field when validated
+        Cgpa::where('s_id', $s_id)->update([
+            'valid' => 1
+        ]);
+
+        return response()->json(['message' => 'CGPA validated successfully.']);
+    }
+    public function saveCgpa(Request $request)
+    {
+        // Iterate over levels and semesters
+        foreach ($request->input('cgpa') as $level => $semesters) {
+            foreach ($semesters as $semester => $cgpaValue) {
+                $creditValue = $request->input('credit')[$level][$semester] ?? 0;
+                $isValid = isset($request->input('validate')[$level][$semester]) ? 1 : 0;
+
+                // Save to student_cgpa_validation table
+                $cgpaValidation = new StudentCgpaValidation();
+                $cgpaValidation->s_id = $request->s_id; // Assuming you pass this in your request
+                $cgpaValidation->level = $level;
+                $cgpaValidation->semester = $semester;
+                $cgpaValidation->cgpa = $cgpaValue;
+                $cgpaValidation->done = 0; // Set done to 0
+                $cgpaValidation->save();
+
+                // Save to cgpa table with valid status
+                $cgpa = new Cgpa(); // Replace with your actual CGPA model
+                $cgpa->s_id = $request->s_id; // Assuming you pass this in your request
+                $cgpa->{'l' . $level . 's' . $semester} = $cgpaValue; // Dynamically set the field
+                $cgpa->valid = $isValid; // Set valid status
+                $cgpa->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'CGPA data saved successfully!');
+    }
+
+    public function resultValidation(Request $request)
+    {
+        // Filter conditions
+
+        $query = Cgpa::query();
+
+        if ($request->filled('s_id')) {
+            $query->where('s_id', $request->s_id);
+        }
+        if ($request->filled('level')) {
+            $query->where('level', $request->level);
+        }
+        if ($request->filled('semester')) {
+            $query->where('semester', $request->semester);
+        }
+
+        // Fetch records that need validation (done = 0)
+        $students = $query->where('valid', 0)->get();
+
+        return view('admins.resultValidation', compact('students'));
+    }
+    public function validationReq()
+    {
+        $mergedData = Cgpa::select('cgpas.*', 'students.name', 'students.level', 'students.semester')
+            ->join('students', 'cgpas.s_id', '=', 'students.s_id')
+            ->get();
+
+        return view('admins.resultValidation', compact('mergedData'));
+    }
+    public function validateCgpa(Request $request, $id)
+    {
+        $student = StudentCgpaValidation::findOrFail($id);
+
+        // Validate CGPA based on input
+        if ($request->input('is_valid') === '1') {
+            $student->cgpa = 100; // Set CGPA to 100 if valid
+        } else {
+            $student->cgpa = -100; // Set CGPA to -100 if not valid
+        }
+
+        $student->done = 1; // Mark as done
+        $student->save(); // Save changes
+
+        return redirect()->route('resultValidation')->with('success', 'CGPA validation updated successfully.');
+    }
+
 
     public function gotoAdminStudentDashboard(Request $request)
     {
@@ -160,31 +254,31 @@ class DashboardController extends Controller
         // dd($student);
         return view('admins.teacheredit', [
             'teacher' => $teacher,
-            'faculties' => ['Computer Science and Engineering', 'Agriculture', 'Engineering'],
-            'departments' => ['CSE', 'EEE', 'ECE'],
+            'faculties' => ['Computer Science and Engineering'],
+            'departments' => [
+                1 => 'CSE',
+                2 => 'EEE',
+                3 => 'ECE',
+            ],
             'designations' => ['Lecturer', 'Assistant Professor', 'Associate Professor', 'Professor'],
         ]);
     }
+    public function updateTeacher(Teacher $teacher, Request $request)
+    {
+        $data = $request->input();
+        $teacher->update(($data));
+        $teacher->faculty = 1;
+        $teacher->save();
+        return redirect(route('gotoAdminTeacher'))->with('success', 'Teacher Updated Successfully');
+    }
     public function updatestudent(Student $student, Request $request)
     {
-        // $data = $request->validate([
-        //     's_id' => 'required',
-        //     'name' => 'required',
-        //     'degree' => 'required',
-        //     'level' => 'required',  
-        //     'semester' => 'required',  
-        //     'session' => 'required',
-        //     'email' => 'required|email',  
-        //     'password' => 'required',
-        // ]);
-        // if ($request->filled('password')) {
-        //     $data['password'] = bcrypt($request->password);
-        // } else {
-        //     unset($data['password']);
-        // }
-        dd($student);
-        // $student->update(($data));
-        // return redirect(route('gotoAdminStudent'))->with('success', 'Student Updated Successfully');
+        $data = $request->input();
+        // dd($data);
+        $student->update(($data));
+        $student->password = bcrypt($request->input('password'));
+        $student->save();
+        return redirect(route('gotoAdminStudent'))->with('success', 'Student Updated Successfully');
     }
     public function destroystudent(Student $student)
     {
@@ -227,14 +321,10 @@ class DashboardController extends Controller
     {
         $user = Session::get('curr_user');
         $email = $user->email;
-
-        // Get distributions where the user's email matches
-        // $distributions = DB::table('distributions')
-        //     ->where('teacher', $email)
-        //     ->get();
         $courses = DB::table('courses')->get(['code', 'name']);
-
         $currentDate = now()->toDateString();
+
+        DB::table('courses_schedule')->where('date', '<', Carbon::today())->delete();
 
         $scheduledCourses = DB::table('courses_schedule')
             ->join('courses', 'courses_schedule.course_code', '=', 'courses.code')
@@ -290,38 +380,16 @@ class DashboardController extends Controller
         $user = Session::get('curr_user');
         $id = $user->id;
 
-        //     // Find the student by ID
-        //     $student = Student::findOrFail($id);
-        //     $courses = Course::all();
-        //     if ($courses->isEmpty()) {
-        //         return "No courses found.";
-        //     }
-
-        //     // Get the first course
-        //     $studentLevel = $student->level;
-        //     $studentSemester = $student->semester;
-
-        //     // Retrieve courses that match the student's level and semester
-        //     $course = Course::where('level', $studentLevel)
-        //         ->where('semester', $studentSemester)
-        //         ->get();
-
-        //     // Fetch schedules for the course
-        //     $schedules = Course_Schedule::where('course_code', $course->code)->get();
-
-        //     // Check if schedules were found
-        //     if ($schedules->isEmpty()) {
-        //         return "No schedules found for course code: {$course->code}";
-        //     }
         $student = Student::findOrFail($id);
         $studentLevel = $student->level;
         $studentSemester = $student->semester;
         // dd($student);
-        // Use a join to fetch courses and their schedules based on student level and semester
+        $currentDate = now()->toDateString();
         $schedules = Course_Schedule::join('courses', 'courses_schedule.course_code', '=', 'courses.code')
             ->where('courses.level', $studentLevel)
             ->where('courses.semester', $studentSemester)
             ->select('courses_schedule.*', 'courses.name as course_name')
+            ->where('courses_schedule.date', '>=', $currentDate)
             ->get();
 
         // Check if any schedules were found

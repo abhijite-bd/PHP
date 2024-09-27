@@ -15,7 +15,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center my-4">
             <h1>Course Distribution</h1>
-            <a href="{{ route('gotoAdminCourseDist') }}" class="btn btn-primary">Distribute Course</a>
+            <a href="{{ route('gotoDistributeCoursePage') }}" class="btn btn-primary">Distribute Course</a>
         </div>
 
         <!-- Success Message -->

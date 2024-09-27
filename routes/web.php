@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\CGPAController;
 use App\Http\Controllers\ClassRoutineController;
 use App\Http\Controllers\StudentMaterialController;
 
@@ -33,8 +34,12 @@ Route::delete('/teacher/dashboard/classschedule/{id}/destroy', [DashboardControl
 
 Route::get('/student/dashboard', [DashboardController::class, 'gotoStudentDashboard'])->name('gotoStudentDashboard');
 Route::get('/student/dashboard/classschedule', [DashboardController::class, 'gotoStudentClassSchedule'])->name('gotoStudentClassSchedule');
-Route::get('/student/dashboard/result', [DashboardController::class, 'gotoStudentResult'])->name('gotoResult');
+Route::get('/student/dashboard/result/edit', [CGPAController::class, 'gotoResult'])->name('gotoResult');
+Route::put('/student/dashboard/result/edit', [CGPAController::class, 'saveResult'])->name('saveResult');
+Route::get('/student/dashboard/result/courses', [CGPAController::class, 'fetchCourses'])->name('fetchCourses');
 Route::get('/admin/dashboard', [DashboardController::class, 'gotoAdminDashboard'])->name('gotoAdminDashboard');
+Route::get('/admin/dashboard/resultValidation', [DashboardController::class, 'resultValidation'])->name('resultValidation');
+Route::post('/admin/dashboard/validate/{id}', [DashboardController::class, 'validateCgpa'])->name('validateCgpa');
 
 Route::get('/admin/dashboard/student', [DashboardController::class, 'gotoAdminStudentDashboard'])->name('gotoAdminStudent');
 Route::get('/admin/dashboard/teacher', [DashboardController::class, 'gotoAdminTeacherDashboard'])->name('gotoAdminTeacher');
