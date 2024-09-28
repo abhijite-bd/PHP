@@ -75,7 +75,7 @@
     <div class="container">
         <div class="left-section">
             <h3 class="text-3xl font-bold">Welcome to EduNexus</h3>
-            <p class="mt-4 text-sm text-white-300">Our Super Shop Management System streamlines your retail operations by offering a comprehensive suite of tools for inventory management, sales tracking, and customer relationship management. With user-friendly dashboards and detailed analytics, you can optimize stock levels, monitor sales performance, and enhance customer satisfaction. Join us in transforming your shop into a modern, and efficient operation.</p>
+            <p class="mt-4 text-sm text-white-300"><strong>EduNexus</strong> ensures efficient communication among all users while providing role-based access for privacy and security. Teachers can manage and update course content, while students can track their progress in real-time, leading to a more transparent and organized learning environment. Additionally, the platform's flexibility allows for easy customization to suit the specific needs of the institution.</p>
 
             
             <div class="mt-4">

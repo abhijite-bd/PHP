@@ -25,7 +25,6 @@ class CGPAController extends Controller
 {
     public function saveResult(CGPA $cgpa, Request $request)
     {
-        // Validate the request data
         $request->validate([
             'valid' => 'nullable|boolean',
             'sem1' => 'nullable|numeric|min:0|max:4.00',
@@ -39,12 +38,10 @@ class CGPAController extends Controller
         ]);
         $user = Session::get('curr_user');
         $s_id = $user->s_id;
-        // Find the CGPA record for the student ID, or create a new one if it doesn't exist
         $cgpa = CGPA::where('s_id', $s_id)->first();
 
         if ($cgpa) {
-            // dd($cgpa);
-            // If CGPA exists, update it
+
             $cgpa->{'sem1'} = $request->input('sem1');
             $cgpa->{'sem2'} = $request->input('sem2');
             $cgpa->{'sem3'} = $request->input('sem3');
@@ -66,7 +63,7 @@ class CGPAController extends Controller
                 'sem6' => $request->input('sem6'),
                 'sem7' => $request->input('sem7'),
                 'sem8' => $request->input('sem8'),
-                'valid' => $request->input('valid'),
+                'valid' => 0,
             ]);
         }
 
@@ -80,21 +77,20 @@ class CGPAController extends Controller
         $s_id = $user->s_id;
         $cgpa = CGPA::where('s_id', $s_id)->first();
 
-        // dd($cgpa);
+
         $credits = [19.00, 19.25, 21.5, 20, 18.5, 18.5, 18.75, 19.25];
         $weightedSum = 0;
         $totalCredits = 0;
+        if ($cgpa) {
 
-        // Loop through each semester and calculate only for filled CGPA fields
-        for ($i = 1; $i <= 8; $i++) {
-            $semCgpa = $cgpa->{'sem' . $i}; // Get CGPA for the semester
+            for ($i = 1; $i <= 8; $i++) {
+                $semCgpa = $cgpa->{'sem' . $i};
 
-            if ($semCgpa !== null) {
-                // Add to the weighted sum: CGPA * Credits
-                $weightedSum += $semCgpa * $credits[$i - 1];
+                if ($semCgpa !== null) {
+                    $weightedSum += $semCgpa * $credits[$i - 1];
 
-                // Sum up the credits only for filled CGPA fields
-                $totalCredits += $credits[$i - 1];
+                    $totalCredits += $credits[$i - 1];
+                }
             }
         }
         $result = $totalCredits > 0 ? $weightedSum / $totalCredits : null;
@@ -119,14 +115,14 @@ class CGPAController extends Controller
     // }
     public function fetchCourses(Request $request)
     {
-        dd($request);
+        // dd($request);
         try {
             $semester = $request->get('semester');
             $level = $request->get('level');
             $degree = 'B.Sc. in CSE'; // Use the constant degree string
 
             // Log the incoming request data for debugging
-            Log::info('Fetch courses request data', ['semester' => $semester, 'level' => $level, 'degree' => $degree]);
+            // Log::info('Fetch courses request data', ['semester' => $semester, 'level' => $level, 'degree' => $degree]);
 
             // Fetch courses based on semester, level, and degree
             $courses = Course::where('degree', $degree)
@@ -138,7 +134,7 @@ class CGPAController extends Controller
             return response()->json(['courses' => $courses], 200);
         } catch (\Exception $e) {
             // Log the error message
-            Log::error('Error fetching courses: ' . $e->getMessage());
+            // Log::error('Error fetching courses: ' . $e->getMessage());
 
             // Return error response
             return response()->json(['error' => 'Failed to fetch courses'], 500);

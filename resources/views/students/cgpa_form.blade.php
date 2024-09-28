@@ -72,8 +72,8 @@
             </table>
 
             <div class="mb-3 text-center">
-                <button type="button" class="btn {{ $cgpa->valid == 1 ? 'btn-success' : 'btn-danger' }} w-50" disabled>
-                    {{ $cgpa->valid == 1 ? 'Valid' : 'Not Valid' }}
+                <button type="button" class="btn {{ $cgpa && $cgpa->valid == 1 ? 'btn-success' : 'btn-danger' }} w-50" disabled>
+                    {{ $cgpa && $cgpa->valid == 1 ? 'Authenticated' : 'Not Authenticated' }}
                 </button>
             </div>
 

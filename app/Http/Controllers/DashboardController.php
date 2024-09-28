@@ -91,48 +91,50 @@ class DashboardController extends Controller
     public function resultValidation(Request $request)
     {
         // Filter conditions
+        $query = Cgpa::select('cgpas.*', 'students.name', 'students.level', 'students.semester')
+            ->join('students', 'cgpas.s_id', '=', 'students.s_id');
 
-        $query = Cgpa::query();
-
+        // Apply filters based on request inputs
         if ($request->filled('s_id')) {
-            $query->where('s_id', $request->s_id);
+            $query->where('cgpas.s_id', $request->s_id);
         }
+
         if ($request->filled('level')) {
-            $query->where('level', $request->level);
+            $query->where('students.level', $request->level);
         }
+
         if ($request->filled('semester')) {
-            $query->where('semester', $request->semester);
+            $query->where('students.semester', $request->semester);
         }
+        $mergedData = $query->where('valid', 0)->get();
 
-        // Fetch records that need validation (done = 0)
-        $students = $query->where('valid', 0)->get();
-
-        return view('admins.resultValidation', compact('students'));
+        return view('admins.resultValidation', compact('mergedData'));
     }
     public function validationReq()
     {
         $mergedData = Cgpa::select('cgpas.*', 'students.name', 'students.level', 'students.semester')
             ->join('students', 'cgpas.s_id', '=', 'students.s_id')
+            ->where('cgpas.valid', 0)
             ->get();
 
         return view('admins.resultValidation', compact('mergedData'));
     }
-    public function validateCgpa(Request $request, $id)
+    public function validateCgpa($id)
     {
-        $student = StudentCgpaValidation::findOrFail($id);
+        $cgpa = Cgpa::findOrFail($id);
+        $cgpa->valid = 1;
+        $cgpa->save();
 
-        // Validate CGPA based on input
-        if ($request->input('is_valid') === '1') {
-            $student->cgpa = 100; // Set CGPA to 100 if valid
-        } else {
-            $student->cgpa = -100; // Set CGPA to -100 if not valid
-        }
-
-        $student->done = 1; // Mark as done
-        $student->save(); // Save changes
-
-        return redirect()->route('resultValidation')->with('success', 'CGPA validation updated successfully.');
+        return redirect()->route('resultValidation')->with('success', 'CGPA marked as valid.');
     }
+    public function deleteCgpa($id)
+    {
+        $cgpa = Cgpa::findOrFail($id);
+        $cgpa->delete();
+
+        return redirect()->route('resultValidation')->with('success', 'CGPA deleted successfully.');
+    }
+
 
 
     public function gotoAdminStudentDashboard(Request $request)
@@ -406,30 +408,33 @@ class DashboardController extends Controller
     public function gotoStudentDashboard()
     {
         $user = Session::get('curr_user');
-
         $cs = Course::all();
-
+        
         $routines = ClassRoutine::where('degree', $user->degree)
-            ->where('level', $user->level)
-            ->where('semester', $user->semester)
-            ->where('session', $user->session)
-            ->get();
-
+        ->where('level', $user->level)
+        ->where('semester', $user->semester)
+        ->where('session', $user->session)
+        ->get();
+        
         $courses = Course::where('degree', $user->degree)
-            ->where('level', $user->level)
-            ->where('semester', $user->semester)
-            ->get();
-
+        ->where('level', $user->level)
+        ->where('semester', $user->semester)
+        ->get();
+        
         //dd($routines);
         // Check if routines are retrieved correctly
+        // dd($courses);
         if ($routines->isEmpty()) {
             // Handle the case where no routines are found
             return view('students.studentDashboard', [
+                'user' => $user,
+                'courses' => $courses,
+                'cs' => $cs,
                 'routines' => collect(), // Pass an empty collection if no routines found
                 'message' => 'No class routines found for your selection.',
             ]);
         }
-
+        
         return view('students.studentDashboard', [
             'routines' => $routines,
             'user' => $user,
