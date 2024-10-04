@@ -1,86 +1,72 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.master')
 
-<head>
-    <title>Course Distribution List</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-        .table-container {
-            margin-top: 20px;
-        }
-    </style>
-</head>
+@section('content')
+<div class="container mx-auto mt-8 px-4 md:px-10">
+    <div class="flex justify-between items-center my-4">
+        <h1 class="text-2xl font-bold">Course Distribution</h1>
+        <a href="{{ route('gotoDistributeCoursePage') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Distribute Course</a>
+    </div>
 
-<body>
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center my-4">
-            <h1>Course Distribution</h1>
-            <a href="{{ route('gotoDistributeCoursePage') }}" class="btn btn-primary">Distribute Course</a>
+    <!-- Success Message -->
+    <div>
+        @if(session()->has('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded text-center mb-4" role="alert">
+            {{ session('success') }}
         </div>
+        @endif
+    </div>
 
-        <!-- Success Message -->
-        <div>
-            @if(session()->has('success'))
-            <div class="alert alert-success text-center">
-                {{ session('success') }}
-            </div>
-            @endif
-        </div>
-
+    <div>
         <!-- Filter Form -->
-        <form method="GET" action="{{ route('gotoAdminCourseDist') }}" class="mb-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <input type="text" name="course_code" value="{{ request('course_code') }}" class="form-control" placeholder="Course Code">
+        <form method="GET" action="{{ route('gotoAdminCourseDist') }}" class="mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <input type="text" name="course_code" value="{{ request('course_code') }}" class="w-full p-2 border border-gray-300 rounded" placeholder="Course Code">
                 </div>
-                <div class="col-md-3">
-                    <input type="text" name="course_name" value="{{ request('course_name') }}" class="form-control" placeholder="Course Name">
+                <div>
+                    <input type="text" name="course_name" value="{{ request('course_name') }}" class="w-full p-2 border border-gray-300 rounded" placeholder="Course Name">
                 </div>
-                <div class="col-md-3">
-                    <input type="text" name="teacher_name" value="{{ request('teacher_name') }}" class="form-control" placeholder="Teacher">
+                <div>
+                    <input type="text" name="teacher_name" value="{{ request('teacher_name') }}" class="w-full p-2 border border-gray-300 rounded" placeholder="Teacher">
                 </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                    <a href="{{ route('gotoAdminCourseDist') }}" class="btn btn-secondary">Clear</a>
+                <div class="flex items-center space-x-2">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Filter</button>
+                    <a href="{{ route('gotoAdminCourseDist') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Clear</a>
                 </div>
             </div>
         </form>
-
-        <!-- Course Distribution Table -->
-        <div class="table-container">
-            <table class="table table-bordered table-striped table-hover text-center" style="width:100%">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Course Code</th>
-                        <th>Course Name</th>
-                        <th>Teacher</th>
-                        <th>Session</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($cdistributions as $cdistribution)
-                    <tr>
-                        <td>{{ $cdistribution->course_code }}</td>
-                        <td>{{ $cdistribution->name }}</td>
-                        <td>{{ $cdistribution->teacher_name }}</td>
-                        <td>{{ $cdistribution->session }}</td>
-                        <td>
-                            <form method="post" action="{{ route('coursedist.destroy', ['cdistribution' => $cdistribution->course_code]) }}" onsubmit="return confirm('Are you sure you want to delete this course distribution?');">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+FF4s0Qnb4F28LlGXKa6tXKp4RgQ" crossorigin="anonymous"></script>
-</body>
-
-</html>
+    <!-- Course Distribution Table -->
+    <div class="table-container overflow-x-auto">
+        <table class="min-w-full border-collapse w-full border border-gray-300">
+            <thead>
+                <tr class="bg-gray-800 text-white">
+                    <th class="border border-gray-300 px-4 py-2">Course Code</th>
+                    <th class="border border-gray-300 px-4 py-2">Course Name</th>
+                    <th class="border border-gray-300 px-4 py-2">Teacher</th>
+                    <th class="border border-gray-300 px-4 py-2">Session</th>
+                    <th class="border border-gray-300 px-4 py-2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($cdistributions as $cdistribution)
+                <tr class="text-center">
+                    <td class="border border-gray-300 px-4 py-2">{{ $cdistribution->course_code }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $cdistribution->name }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $cdistribution->teacher_name }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $cdistribution->session }}</td>
+                    <td class="border border-gray-300 px-4 py-2">
+                        <form method="post" action="{{ route('coursedist.destroy', ['cdistribution' => $cdistribution->course_code]) }}" onsubmit="return confirm('Are you sure you want to delete this course distribution?');">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endsection

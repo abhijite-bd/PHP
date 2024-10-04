@@ -23,8 +23,9 @@ use Illuminate\Support\Facades\Log;
 
 class CGPAController extends Controller
 {
-    public function saveResult(CGPA $cgpa, Request $request)
+    public function saveResult($id, Request $request)
     {
+        // dd($id);
         $request->validate([
             'valid' => 'nullable|boolean',
             'sem1' => 'nullable|numeric|min:0|max:4.00',
@@ -36,12 +37,10 @@ class CGPAController extends Controller
             'sem7' => 'nullable|numeric|min:0|max:4.00',
             'sem8' => 'nullable|numeric|min:0|max:4.00',
         ]);
-        $user = Session::get('curr_user');
-        $s_id = $user->s_id;
-        $cgpa = CGPA::where('s_id', $s_id)->first();
+        $cgpa = CGPA::where('s_id', $id)->first();
+        // dd($cgpa);
 
         if ($cgpa) {
-
             $cgpa->{'sem1'} = $request->input('sem1');
             $cgpa->{'sem2'} = $request->input('sem2');
             $cgpa->{'sem3'} = $request->input('sem3');
@@ -54,7 +53,7 @@ class CGPAController extends Controller
             $cgpa->save();  // Save the updated CGPA
         } else {
             CGPA::create([
-                's_id' => $s_id,
+                's_id' => $id,
                 'sem1' => $request->input('sem1'),
                 'sem2' => $request->input('sem2'),
                 'sem3' => $request->input('sem3'),
@@ -95,24 +94,9 @@ class CGPAController extends Controller
         }
         $result = $totalCredits > 0 ? $weightedSum / $totalCredits : null;
 
-        return view('students.cgpa_form', ['cgpa' => $cgpa, 'credits' => $credits, 'result' => $result]);
+        return view('students.myresult', ['cgpa' => $cgpa, 'credits' => $credits, 'result' => $result]);
     }
-    // public function fetchCourses(Request $request)
-    // {
-    //     dd($request);
-    //     // $semester = $request->get('semester');
-    //     // $level = $request->get('level');
-    //     // $degree = $request->get('degree');
-    //     // dd($request);
 
-    //     // // Fetch the courses from the `courses` table that match the degree, level, and semester
-    //     // $courses = Course::where('degree', $degree)
-    //     //     ->where('level', $level)
-    //     //     ->where('semester', $semester)
-    //     //     ->get();
-
-    //     // return response()->json(['courses' => $courses]);
-    // }
     public function fetchCourses(Request $request)
     {
         // dd($request);

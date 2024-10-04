@@ -43,7 +43,7 @@ class MaterialController extends Controller
                 'file' => $materialFilePath,
             ]);
             //return redirect()->back()->with('success', 'Material Added!')->with('active_tab', 'material');
-            notify()->success('Laravel Notify is awesome!');
+            notify()->success('File Uploaded Successfully!');
             return redirect()->back()->with('success', 'Material Added!')->with('activeTab', 'material-tab');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->with('active_tab', 'material');

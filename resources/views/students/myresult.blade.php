@@ -4,37 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update CGPA Information</title>
+    <title>My Result</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container mt-5">
+    <div class="container mt-8">
         <h1 class="text-center mb-4">My Result</h1>
-
-        <!-- Display CGPA Result -->
         @if (isset($result))
         <div class="alert alert-info text-center">
             <strong>CGPA:</strong> {{ number_format($result, 3) }}
         </div>
         @endif
+        <form class="bg-light p-4 shadow rounded">
 
-        <!-- Display any validation errors -->
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-
-        <!-- Form for CGPA input -->
-        <form action="{{ route('saveResult', ['cgpa' => $cgpa]) }}" method="POST" class="bg-light p-4 shadow rounded">
-            @csrf
-            @method('PUT')
 
             <table class="table table-bordered table-hover">
                 <thead class="table-dark">
@@ -49,16 +33,8 @@
                     @for ($i = 1; $i <= 8; $i++)
                         <tr>
                         <td>Level {{ ceil($i / 2) }} Semester {{ $i % 2 == 1 ? 1 : 2 }}</td>
-                        <td>
-                            <input type="number" step="0.01" name="{{ 'sem'.$i }}"
-                                value="{{ isset($cgpa->{'sem'.$i}) ? $cgpa->{'sem'.$i} : '' }}"
-                                class="form-control" placeholder="CGPA for Semester {{ $i }}" min="0" max="4">
-                        </td>
-                        <td>
-                            <input type="number" name="credits[{{ $i }}]"
-                                value="{{ $credits[$i-1] }}"
-                                class="form-control" readonly>
-                        </td>
+                        <td>{{ $cgpa->{'sem'.$i} ?? 'Not Published' }}</td>
+                        <td>{{ $credits[$i-1] }}</td>
                         <td>
                             <button type="button" class="btn btn-info view-courses"
                                 data-semester="{{ $i  }}"
@@ -70,14 +46,6 @@
                         @endfor
                 </tbody>
             </table>
-
-            <div class="mb-3 text-center">
-                <button type="button" class="btn {{ $cgpa && $cgpa->valid == 1 ? 'btn-success' : 'btn-danger' }} w-50" disabled>
-                    {{ $cgpa && $cgpa->valid == 1 ? 'Authenticated' : 'Not Authenticated' }}
-                </button>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100">Update CGPA</button>
         </form>
     </div>
 

@@ -109,7 +109,7 @@
                         </div>
                     </li>
                     <li>
-                        <a href="{{ route('validationReq') }}" class="block py-2 px-3 {{ request()->routeIs('routine.upload.page') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Result Validation</a>
+                        <a href="{{ route('validationReq') }}" class="block py-2 px-3 {{ request()->routeIs('routine.upload.page') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Results</a>
                     </li>
                     @elseif(session('user_role') == 'Teacher')
                     <li>

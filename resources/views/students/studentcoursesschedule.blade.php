@@ -1,43 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.master')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses for Student</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@section('content')
 
-<body>
-    <div class="container mt-5">
-        <h2>Class Schedule</h2>
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Course Code</th>
-                    <th>Course Name</th>
-                    <th>Date</th>
-                    <th>Day</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($schedules as $schedule)
-                <tr>
-                    <td>{{ $schedule->course_code }}</td>
-                    <td>{{ $schedule->course_name }}</td>
-                    <td>{{ $schedule->date }}</td>
-                    <td>{{ $schedule->day }}</td>
-                    <td>{{ $schedule->time }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+<h2 class="text-3xl font-semibold mb-6 text-center">Class Schedule</h2>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+<div class="flex justify-center mt-8">
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg">
+    <thead class="bg-gray-800 text-white">
+    <tr>
+        <th class="py-2 px-4 border-b border-gray-200">Course Code</th>
+        <th class="py-2 px-4 border-b border-gray-200">Course Name</th>
+        <th class="py-2 px-4 border-b border-gray-200">Date</th>
+        <th class="py-2 px-4 border-b border-gray-200">Day</th>
+        <th class="py-2 px-4 border-b border-gray-200">Time</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach ($schedules as $schedule)
+    <tr class="hover:bg-gray-100">
+        <td class="py-2 px-4 border-b border-gray-200 w-48 text-center">{{ $schedule->course_code }}</td> <!-- Set width for course code -->
+        <td class="py-2 px-4 border-b border-gray-200 w-64 text-center">{{ $schedule->course_name }}</td> <!-- Set width for course name -->
+        <td class="py-2 px-4 border-b border-gray-200 w-48 text-center">{{ $schedule->date }}</td> <!-- Set width for date -->
+        <td class="py-2 px-4 border-b border-gray-200 w-32 text-center">{{ $schedule->day }}</td> <!-- Set width for day -->
+        <td class="py-2 px-4 border-b border-gray-200 w-32 text-center">{{ $schedule->time }}</td> <!-- Set width for time -->
+    </tr>
+    @endforeach
+</tbody>
 
-</html>
+    </table>
+</div>
+@endsection

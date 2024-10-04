@@ -28,19 +28,20 @@ Route::post('/teacherlogin', [LoginController::class, 'loginTeacher'])->name('lo
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/teacher/dashboard', [DashboardController::class, 'gotoTeacherDashboard'])->name('gotoTeacherDashboard');
+Route::get('/teacher/dashboard/gotoTeacherProfile', [DashboardController::class, 'gotoTeacherProfile'])->name('gotoTeacherProfile');
 Route::get('/teacher/dashboard/classschedule', [DashboardController::class, 'gotoTeacherClassSchedule'])->name('gotoTeacherClassSchedule');
 Route::post('/teacher/dashboard/classschedule', [DashboardController::class, 'gotoTeacherClassScheduleStore'])->name('gotoTeacherClassSchedule.store');
 Route::delete('/teacher/dashboard/classschedule/{id}/destroy', [DashboardController::class, 'courses_schedule_destroy'])->name('courses_schedule.destroy');
 
 Route::get('/student/dashboard', [DashboardController::class, 'gotoStudentDashboard'])->name('gotoStudentDashboard');
 Route::get('/student/dashboard/classschedule', [DashboardController::class, 'gotoStudentClassSchedule'])->name('gotoStudentClassSchedule');
-Route::get('/student/dashboard/result/edit', [CGPAController::class, 'gotoResult'])->name('gotoResult');
-Route::put('/student/dashboard/result/edit', [CGPAController::class, 'saveResult'])->name('saveResult');
+Route::get('/student/dashboard/result', [CGPAController::class, 'gotoResult'])->name('gotoResult');
 Route::get('/student/dashboard/result/courses', [CGPAController::class, 'fetchCourses'])->name('fetchCourses');
 Route::get('/admin/dashboard', [DashboardController::class, 'gotoAdminDashboard'])->name('gotoAdminDashboard');
 Route::get('/admin/dashboard/resultValidation', [DashboardController::class, 'validationReq'])->name('validationReq');
 Route::get('/admin/dashboard/resultValidation/filter', [DashboardController::class, 'resultValidation'])->name('resultValidation');
-Route::post('/admin/dashboard/validate/{id}', [DashboardController::class, 'validateCgpa'])->name('validateCgpa');
+Route::get('/admin/dashboard/resultValidation/{id}/edit', [DashboardController::class, 'editCgpa'])->name('editCgpa');
+Route::put('/admin/dashboard/resultValidation/{id}/edit', [CGPAController::class, 'saveResult'])->name('saveResult');
 Route::delete('/admin/dashboard/validate/{id}', [DashboardController::class, 'deleteCgpa'])->name('deleteCgpa');
 
 Route::get('/admin/dashboard/student', [DashboardController::class, 'gotoAdminStudentDashboard'])->name('gotoAdminStudent');
