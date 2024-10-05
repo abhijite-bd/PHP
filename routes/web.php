@@ -12,6 +12,7 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\CGPAController;
 use App\Http\Controllers\ClassRoutineController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\StudentMaterialController;
 
 Route::get('/', function () {
@@ -28,12 +29,18 @@ Route::post('/teacherlogin', [LoginController::class, 'loginTeacher'])->name('lo
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/teacher/dashboard', [DashboardController::class, 'gotoTeacherDashboard'])->name('gotoTeacherDashboard');
+Route::get('/teacher/dashboard/teachersExamPage', [ExamController::class, 'gotoTeachersExamPage'])->name('gotoTeachersExamPage');
+Route::get('/teacher/dashboard/teachersExamPage/filter', [ExamController::class, 'gotoTeachersExamPagefilter'])->name('gotoTeachersExamPagefilter');
+Route::delete('/teacher/dashboard/teachersExamPage/{id}/destroy', [ExamController::class, 'examdestroy'])->name('examdestroy');
+Route::get('/teacher/dashboard/teachersExamPage/create', [ExamController::class, 'examcreate'])->name('examcreate');
+Route::post('/teacher/dashboard/teachersExamPage', [ExamController::class, 'examstore'])->name('examstore');
 Route::get('/teacher/dashboard/gotoTeacherProfile', [DashboardController::class, 'gotoTeacherProfile'])->name('gotoTeacherProfile');
 Route::get('/teacher/dashboard/classschedule', [DashboardController::class, 'gotoTeacherClassSchedule'])->name('gotoTeacherClassSchedule');
 Route::post('/teacher/dashboard/classschedule', [DashboardController::class, 'gotoTeacherClassScheduleStore'])->name('gotoTeacherClassSchedule.store');
 Route::delete('/teacher/dashboard/classschedule/{id}/destroy', [DashboardController::class, 'courses_schedule_destroy'])->name('courses_schedule.destroy');
 
 Route::get('/student/dashboard', [DashboardController::class, 'gotoStudentDashboard'])->name('gotoStudentDashboard');
+Route::get('/student/dashboard/viewexam', [ExamController::class, 'viewexam'])->name('viewexam');
 Route::get('/student/dashboard/classschedule', [DashboardController::class, 'gotoStudentClassSchedule'])->name('gotoStudentClassSchedule');
 Route::get('/student/dashboard/result', [CGPAController::class, 'gotoResult'])->name('gotoResult');
 Route::get('/student/dashboard/result/courses', [CGPAController::class, 'fetchCourses'])->name('fetchCourses');
@@ -99,6 +106,7 @@ Route::get('/download/assignment/{id}', [AssignmentController::class, 'downloadA
 Route::post('/edit/assignment/{id}', [AssignmentController::class, 'editAssignment'])->name('editAssignment')->middleware(TeacherMiddleware::class);
 
 Route::get('/routine/upload', [ClassRoutineController::class, 'uploadPage'])->name('routine.upload.page');
+// Route::get('/routine/upload/filter', [ClassRoutineController::class, 'filterRoutine'])->name('filterRoutine');
 Route::post('/routine/upload', [ClassRoutineController::class, 'upload'])->name('routine.upload');
 
 

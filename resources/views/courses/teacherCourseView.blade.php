@@ -31,9 +31,7 @@
             <li class="me-2" role="presentation">
                 <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="assignment-tab" data-tabs-target="#assignment" type="button" role="tab" aria-controls="assignment" aria-selected="false">Assignments</button>
             </li>
-            <li class="me-2" role="presentation">
-                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="exam-tab" data-tabs-target="#exam" type="button" role="tab" aria-controls="exam" aria-selected="false">Exams</button>
-            </li>
+            
         </ul>
     </div>
     <div id="default-tab-content">

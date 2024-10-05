@@ -11,6 +11,9 @@
     <form method="GET" action="{{ route('gotoAdminStudent') }}" class="mb-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
+                <input type="text" name="id" placeholder="Enter ID" class="w-full p-2 border border-gray-300 rounded" value="{{ request('id') }}">
+            </div>
+            <div>
                 <select name="level" class="w-full p-2 border border-gray-300 rounded">
                     <option value="">Select Level</option>
                     <option value="1" {{ request('level') == '1' ? 'selected' : '' }}>Level 1</option>

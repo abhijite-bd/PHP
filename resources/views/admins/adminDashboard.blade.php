@@ -1,46 +1,47 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container-fluid p-5">
-    <table style="width: 90%; height: 80vh; border-collapse: collapse;"> <!-- Adjust table size -->
+<div class="container mx-auto mt-10 px-4 md:px-12 md:py-12">
+    <table style="width: 90%; height: 80vh; border-collapse: collapse;">
         <tr>
-            <td style="width: 50%; height: 50%; text-align: center; vertical-align: middle; font-size: 2rem; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <td class="card-td w-1/2">
                 <!-- Student Card -->
                 <div class="col-md-12 mb-4">
-                    <div class="card text-center p-4 shadow-lg" style="height: 100%; width: 100%;" onclick="location.href='{{ route('gotoAdminStudent') }}';">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                            <h3 class="card-title">Student</h3>
+                    <div class="card text-center p-4 shadow-lg h-full w-full cursor-pointer hover:bg-gray-100" onclick="location.href='{{ route('gotoAdminStudent') }}';">
+                        <div class="card-body flex flex-col justify-center items-center">
+                            <h3 class="card-title text-2xl font-semibold">Student</h3>
                         </div>
                     </div>
                 </div>
             </td>
-            <td style="width: 50%; height: 50%; text-align: center; vertical-align: middle; font-size: 2rem; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <td class="card-td w-1/2">
                 <!-- Course Distribution Card -->
                 <div class="col-md-12 mb-4">
-                    <div class="card text-center p-4 shadow-lg" style="height: 100%; width: 100%;" onclick="location.href='{{ route('gotoAdminCourseDist') }}';">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                            <h3 class="card-title">Course Distribution</h3>
+                    <div class="card text-center p-4 shadow-lg h-full w-full cursor-pointer hover:bg-gray-100" onclick="location.href='{{ route('gotoAdminCourseDist') }}';">
+                        <div class="card-body flex flex-col justify-center items-center">
+                            <h3 class="card-title text-2xl font-semibold">Course Distribution</h3>
                         </div>
                     </div>
                 </div>
             </td>
         </tr>
         <tr>
-            <td style="width: 40%; height: 40%; text-align: center; vertical-align: middle; font-size: 2rem; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"> <!-- Font size increased, scale effect added -->
+            <td class="card-td">
+                <!-- Course Card -->
                 <div class="col-md-12 mb-4">
-                    <div class="card text-center p-4 shadow-lg" style="height: 100%; width: 100%;" onclick="location.href='{{ route('gotoAdminCourse') }}';">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                            <h3 class="card-title">Course</h3>
+                    <div class="card text-center p-4 shadow-lg h-full w-full cursor-pointer hover:bg-gray-100" onclick="location.href='{{ route('gotoAdminCourse') }}';">
+                        <div class="card-body flex flex-col justify-center items-center">
+                            <h3 class="card-title text-2xl font-semibold">Course</h3>
                         </div>
                     </div>
                 </div>
             </td>
-            <td style="width: 50%; height: 50%; text-align: center; vertical-align: middle; font-size: 2rem; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            <td class="card-td">
                 <!-- Teacher Card -->
                 <div class="col-md-12 mb-4">
-                    <div class="card text-center p-4 shadow-lg" style="height: 100%; width: 100%;" onclick="location.href='{{ route('gotoAdminTeacher') }}';">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                            <h3 class="card-title">Teacher</h3>
+                    <div class="card text-center p-4 shadow-lg h-full w-full cursor-pointer hover:bg-gray-100" onclick="location.href='{{ route('gotoAdminTeacher') }}';">
+                        <div class="card-body flex flex-col justify-center items-center">
+                            <h3 class="card-title text-2xl font-semibold">Teacher</h3>
                         </div>
                     </div>
                 </div>

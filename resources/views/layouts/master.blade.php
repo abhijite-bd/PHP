@@ -17,7 +17,7 @@
 
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="{{ asset('images/HSTU_Logo (1).png') }}" class="h-8 me-3" alt="HSTU Logo" />
                 <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">EduNexus</span>
             </a>
@@ -119,7 +119,10 @@
                         <a href="{{ route('gotoTeacherClassSchedule') }}" class="block py-2 px-3 {{ request()->routeIs('gotoTeacherClassSchedule') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Class Schedule</a>
                     </li>
                     <li>
-                        <a href="{{ route('gotoTeachersCoursesPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoTeachersCoursesPage') || request()->routeIs('gotoTeachersCourseViewPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Your Courses</a>
+                        <a href="{{ route('gotoTeachersCoursesPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoTeachersCoursesPage') || request()->routeIs('gotoTeachersCourseViewPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Courses</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('gotoTeachersExamPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoTeachersCoursesPage') || request()->routeIs('gotoTeachersCourseViewPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Exams</a>
                     </li>
 
                     @if((request()->routeIs('gotoTeachersCourseViewPage') || request()->routeIs('gotoUploadMaterialByTeacherPage') || request()->routeIs('gotoUploadAssignmentByTeacherPage')))
@@ -131,16 +134,19 @@
                         <a href="{{ route('gotoStudentDashboard') }}" class="block py-2 px-3 {{ request()->routeIs('gotoTeacherDashboard') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Dashboard</a>
                     </li>
                     <li>
-                        <a href="{{ route('gotoStudentCoursesPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoStudentCoursesPage') || request()->routeIs('gotoStudentsCourseViewPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Your Courses</a>
+                        <a href="{{ route('gotoStudentCoursesPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoStudentCoursesPage') || request()->routeIs('gotoStudentsCourseViewPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Courses</a>
                     </li>
                     <li>
-                        <a href="{{ route('gotoUploadMaterialByStudentPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoUploadMaterialByStudentPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Your Resources</a>
+                        <a href="{{ route('gotoUploadMaterialByStudentPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoUploadMaterialByStudentPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Resources</a>
                     </li>
                     <li>
-                        <a href="{{ route('gotoResult') }}" class="block py-2 px-3 {{ request()->routeIs('gotoUploadMaterialByStudentPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Your Result</a>
+                        <a href="{{ route('gotoResult') }}" class="block py-2 px-3 {{ request()->routeIs('gotoUploadMaterialByStudentPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Result</a>
                     </li>
                     <li>
                         <a href="{{ route('gotoStudentClassSchedule') }}" class="block py-2 px-3 {{ request()->routeIs('gotoUploadMaterialByStudentPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Class Schedule</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('viewexam') }}" class="block py-2 px-3 {{ request()->routeIs('gotoUploadMaterialByStudentPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Exams</a>
                     </li>
                     @endif
                 </ul>

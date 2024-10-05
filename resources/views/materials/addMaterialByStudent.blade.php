@@ -3,7 +3,7 @@
 @section('content3')
 
         <li>
-            <a href="{{ route('gotoUploadMaterialByStudentPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoUploadMaterialByStudentPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Your Resources</a>
+            <a href="{{ route('gotoUploadMaterialByStudentPage') }}" class="block py-2 px-3 {{ request()->routeIs('gotoUploadMaterialByStudentPage') ? 'text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent' }} rounded md:bg-transparent md:p-0 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Resources</a>
         </li>
 @endsection
 
@@ -11,7 +11,7 @@
 <div class="container mx-auto">
 
     <div class="w-full mb-5 p-6 bg-green-300 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Your Materials</h5>
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Materials</h5>
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">You can save materials for yourself from here.</p>
     </div>
 

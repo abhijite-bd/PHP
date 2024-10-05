@@ -208,7 +208,9 @@ class DashboardController extends Controller
     {
         // Start with a base query
         $query = Student::query();
-
+        if ($request->filled('id')) {
+            $query->where('s_id', $request->id);
+        }
         // Check if 'level' is present in the request and not empty
         if ($request->filled('level')) {
             $query->where('level', $request->level);
