@@ -19,8 +19,8 @@ class StudentMaterialController extends Controller
         $user = Session::get('curr_user');
         $materials = StudentMaterial::where('s_id', $user->s_id)->get();
         //$assignments = Assignment::where('course_code', $code)->where('session', $session)->get();
-        return view('materials.addMaterialByStudent' , [
-            'materials' => $materials, 
+        return view('materials.addMaterialByStudent', [
+            'materials' => $materials,
         ]);
     }
 
@@ -29,7 +29,7 @@ class StudentMaterialController extends Controller
         $user = Session::get('curr_user');
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'string',
         ]);
 
         $materialFilePath = $this->uploadFile($request, 'file', 'public/materialFile');
@@ -56,9 +56,7 @@ class StudentMaterialController extends Controller
             $fileName = $request->title . '_' . $request->file($fileKey)->getClientOriginalName();
             $filePath = $request->file($fileKey)->storeAs($directory, $fileName);
             return str_replace('public/', '', $filePath);
-        }
-        else
-        {
+        } else {
             return '';
         }
 
@@ -67,14 +65,11 @@ class StudentMaterialController extends Controller
 
     public function downloadMaterial($id)
     {
-        // Find the material by ID
         $material = \App\Models\Material::findOrFail($id);
         $filePath = $material->file;
 
-        // Construct the full file path within the storage/app/public/materialFile directory
         $fullFilePath = storage_path('app/public/materialFile/' . basename($filePath));
 
-        // Check if the file exists and return it for download
         if (file_exists($fullFilePath)) {
             return response()->download($fullFilePath);
         } else {
@@ -82,26 +77,41 @@ class StudentMaterialController extends Controller
         }
     }
 
-    
+    public function deleteStudentMaterial($id)
+    {
+        $assignment = StudentMaterial::find($id);
+
+        // Check if the assignment exists
+        if (!$assignment) {
+            return redirect()->back()->with('error', 'Material not found.');
+        }
+
+        // Delete the assignment file if it exists
+        if ($assignment->file) {
+            Storage::delete($assignment->file);
+        }
+
+        // Delete the assignment record from the database
+        $assignment->delete();
+
+        return redirect()->back()->with('success', 'Material deleted successfully.');
+    }
+
 
     public function editStudentMaterial(Request $request, $id)
     {
-        //dd('HI');
         $material = \App\Models\StudentMaterial::findOrFail($id);
-        //dd($material->title);
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'string',
         ]);
         //file ta niye kaj ache
 
         $materialFilePath = $material->file;
-        
-        if($request->file)
-        {
+
+        if ($request->file) {
             $materialFilePath = $this->uploadFile($request, 'file', 'public/materialFile');
         }
-        //$materialFilePath = $this->uploadFile($request, 'file', 'public/materialFile');
 
         try {
             $material->update([

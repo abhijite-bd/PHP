@@ -26,7 +26,7 @@ class DashboardController extends Controller
     {
         return view('teachers.gotoTeacherProfile');
     }
-    
+
     public function gotoAdminDashboard()
     {
         return view('admins.adminDashboard');
@@ -126,24 +126,24 @@ class DashboardController extends Controller
     {
 
         $cgpa = CGPA::where('id', $id)->first();
-        
+
         $credits = [19.00, 19.25, 21.5, 20, 18.5, 18.5, 18.75, 19.25];
         $weightedSum = 0;
         $totalCredits = 0;
         if ($cgpa) {
-            
+
             for ($i = 1; $i <= 8; $i++) {
                 $semCgpa = $cgpa->{'sem' . $i};
-                
+
                 if ($semCgpa !== null) {
                     $weightedSum += $semCgpa * $credits[$i - 1];
-                    
+
                     $totalCredits += $credits[$i - 1];
                 }
             }
         }
         $result = $totalCredits > 0 ? $weightedSum / $totalCredits : null;
-        
+
         // dd($cgpa);
         return view('admins.cgpa_form', ['cgpa' => $cgpa, 'credits' => $credits, 'result' => $result]);
     }
@@ -231,6 +231,7 @@ class DashboardController extends Controller
 
     public function gotoAdminTeacherDashboard(Request $request)
     {
+        // dd($request);
         $query = Teacher::query();
 
         if ($request->filled('department')) {
@@ -239,6 +240,10 @@ class DashboardController extends Controller
 
         if ($request->filled('designation')) {
             $query->where('designation', $request->designation);
+        }
+        $teacherName = $request->input('teacher_name');
+        if ($request->filled('teacher_name')) {
+            $query->where('name', 'like', "%$teacherName%");
         }
 
         $teachers = $query->get();

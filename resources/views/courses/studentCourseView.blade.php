@@ -49,7 +49,6 @@
                             </svg>
                         </a>
                         @endif
-
                     </div>
                     @endforeach
                 </div>

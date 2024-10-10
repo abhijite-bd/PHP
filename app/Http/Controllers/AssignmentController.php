@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class AssignmentController extends Controller
-{    
+{
     public function gotoUploadAssignmentByTeacherPage($code, $session)
     {
         $course = Course::where('code', $code)->first();
         //$materials = Material::where('course_code', $code)->where('session', $session)->get();
         $assignments = Assignment::where('course_code', $code)->where('session', $session)->get();
-        return view('assignments.addAssignmentByTeacher' , [
+        return view('assignments.addAssignmentByTeacher', [
             'course' => $course,
-            'session' => $session, 
-            'assignments' => $assignments, 
+            'session' => $session,
+            'assignments' => $assignments,
         ]);
     }
 
@@ -29,7 +29,7 @@ class AssignmentController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'string',
             'deadline' => 'required|date_format:m/d/Y',
         ]);
 
@@ -47,7 +47,6 @@ class AssignmentController extends Controller
             ]);
             //return redirect()->back()->with('success', 'Assignment Added!')->with('active_tab', 'assignment');
             return redirect()->back()->with('success', 'Assignment Added!')->with('activeTab', 'assignment-tab');
-
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->with('active_tab', 'assignment');
         }
@@ -60,9 +59,7 @@ class AssignmentController extends Controller
             $fileName = $request->title . '_' . $request->file($fileKey)->getClientOriginalName();
             $filePath = $request->file($fileKey)->storeAs($directory, $fileName);
             return str_replace('public/', '', $filePath);
-        }
-        else
-        {
+        } else {
             return '';
         }
 
@@ -85,6 +82,41 @@ class AssignmentController extends Controller
             return abort(404, 'File not found');
         }
     }
+    public function deleteMaterial($id)
+    {
+        
+        $material = Material::find($id);
+       
+        
+        if (!$material) {
+            return redirect()->back()->with('error', 'Material not found.');
+        }
+        if ($material->file) {
+            Storage::delete($material->file);
+        }
+        $material->delete();
+
+        return redirect()->back()->with('success', 'Material deleted successfully.');
+    }
+    public function deleteAssignment($id)
+    {
+        
+        $assignment = Assignment::find($id);
+
+        if (!$assignment) {
+            return redirect()->back()->with('error', 'Assignment not found.');
+        }
+
+        if ($assignment->file) {
+            Storage::delete($assignment->file);
+        }
+
+        $assignment->delete();
+
+        return redirect()->back()->with('success', 'Assignment deleted successfully.');
+    }
+
+
 
     public function editAssignmentPage($id)
     {
@@ -99,15 +131,14 @@ class AssignmentController extends Controller
         $assignment = \App\Models\Assignment::findOrFail($id);
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'string',
             'deadline' => 'required',
         ]);
         //file ta niye kaj ache
 
         $assignmentFilePath = $assignment->file;
-        
-        if($request->file)
-        {
+
+        if ($request->file) {
             $assignmentFilePath = $this->uploadFile($request, 'file', 'public/assignmentFile');
         }
         //$materialFilePath = $this->uploadFile($request, 'file', 'public/materialFile');
@@ -124,6 +155,4 @@ class AssignmentController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
-
-    
 }

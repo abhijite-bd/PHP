@@ -104,6 +104,8 @@ Route::get('/add/assignment/page/{code}/{session}', [AssignmentController::class
 Route::post('/add/assignment/{course_code}/{session}', [AssignmentController::class, 'addAssignment'])->name('addAssignment')->middleware(TeacherMiddleware::class);
 Route::get('/download/assignment/{id}', [AssignmentController::class, 'downloadAssignment'])->name('downloadAssignment')->middleware(TeacherMiddleware::class);
 Route::post('/edit/assignment/{id}', [AssignmentController::class, 'editAssignment'])->name('editAssignment')->middleware(TeacherMiddleware::class);
+Route::delete('/delete/material/{id}', [AssignmentController::class, 'deleteMaterial'])->name('deleteMaterial')->middleware(TeacherMiddleware::class);
+Route::delete('/delete/assignment/{id}', [AssignmentController::class, 'deleteAssignment'])->name('deleteAssignment')->middleware(TeacherMiddleware::class);
 
 Route::get('/routine/upload', [ClassRoutineController::class, 'uploadPage'])->name('routine.upload.page');
 // Route::get('/routine/upload/filter', [ClassRoutineController::class, 'filterRoutine'])->name('filterRoutine');
@@ -111,6 +113,7 @@ Route::post('/routine/upload', [ClassRoutineController::class, 'upload'])->name(
 
 
 Route::post('/add/material/student', [StudentMaterialController::class, 'addStudentMaterial'])->name('addStudentMaterial')->middleware(StudentMiddleware::class);
+Route::delete('/add/material/student/{id}', [StudentMaterialController::class, 'deleteStudentMaterial'])->name('deleteStudentMaterial')->middleware(StudentMiddleware::class);
 Route::get('/add/material/student', [StudentMaterialController::class, 'gotoUploadMaterialByStudentPage'])->name('gotoUploadMaterialByStudentPage')->middleware(StudentMiddleware::class);
 
 Route::post('/edit/material/student/{id}', [StudentMaterialController::class, 'editStudentMaterial'])->name('editStudentMaterial')->middleware(StudentMiddleware::class);

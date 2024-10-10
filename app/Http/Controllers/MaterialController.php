@@ -29,7 +29,7 @@ class MaterialController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
         ]);
 
         $materialFilePath = $this->uploadFile($request, 'file', 'public/materialFile');
@@ -62,17 +62,13 @@ class MaterialController extends Controller
         {
             return '';
         }
-
-        //throw new \Exception('File not present in request.');
     }
 
     public function downloadMaterial($id)
     {
-        // Find the material by ID
         $material = \App\Models\Material::findOrFail($id);
         $filePath = $material->file;
 
-        // Construct the full file path within the storage/app/public/materialFile directory
         $fullFilePath = storage_path('app/public/materialFile/' . basename($filePath));
 
         // Check if the file exists and return it for download
@@ -85,7 +81,7 @@ class MaterialController extends Controller
 
     public function editMaterialPage($id)
     {
-        $material = \App\Models\Material::findOrFail($id);
+        $material = Material::findOrFail($id);
         return view('materials.editMaterialPage', [
             'material' => $material,
         ]);
@@ -96,7 +92,7 @@ class MaterialController extends Controller
         $material = \App\Models\Material::findOrFail($id);
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'string',
         ]);
         //file ta niye kaj ache
 

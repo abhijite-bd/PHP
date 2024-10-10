@@ -9,7 +9,7 @@
 
     <!-- Filter Form -->
     <form method="GET" action="{{ route('gotoAdminTeacher') }}" class="mb-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
                 <select name="department" class="form-select w-full border rounded px-3 py-2">
                     <option value="">Select Department</option>
@@ -26,6 +26,9 @@
                     <option value="Associate Professor" {{ request('designation') == 'Associate Professor' ? 'selected' : '' }}>Associate Professor</option>
                     <option value="Assistant Professor" {{ request('designation') == 'Assistant Professor' ? 'selected' : '' }}>Assistant Professor</option>
                 </select>
+            </div>
+            <div>
+                <input type="text" name="teacher_name" value="{{ request('teacher_name') }}" class="w-full p-2 border rounded" placeholder="Teacher">
             </div>
             <div class="flex items-center space-x-4">
                 <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Filter</button>
