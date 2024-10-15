@@ -14,6 +14,8 @@ use App\Http\Controllers\CGPAController;
 use App\Http\Controllers\ClassRoutineController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\StudentMaterialController;
+use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\EmailController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,6 +42,8 @@ Route::post('/teacher/dashboard/classschedule', [DashboardController::class, 'go
 Route::delete('/teacher/dashboard/classschedule/{id}/destroy', [DashboardController::class, 'courses_schedule_destroy'])->name('courses_schedule.destroy');
 
 Route::get('/student/dashboard', [DashboardController::class, 'gotoStudentDashboard'])->name('gotoStudentDashboard');
+Route::post('/student/dashboard/classschedule/save-reminder', [ReminderController::class, 'saveReminder'])->name('saveReminder');
+Route::delete('/student/dashboard/classschedule/delete-reminder', [ReminderController::class, 'deleteReminder'])->name('deleteReminder');
 Route::get('/student/dashboard/viewexam', [ExamController::class, 'viewexam'])->name('viewexam');
 Route::get('/student/dashboard/classschedule', [DashboardController::class, 'gotoStudentClassSchedule'])->name('gotoStudentClassSchedule');
 Route::get('/student/dashboard/result', [CGPAController::class, 'gotoResult'])->name('gotoResult');
@@ -120,3 +124,4 @@ Route::post('/edit/material/student/{id}', [StudentMaterialController::class, 'e
 
 Route::get('/course/student', [CourseController::class, 'gotoStudentCoursesPage'])->name('gotoStudentCoursesPage')->middleware(StudentMiddleware::class);
 Route::get('/student/course/{code}/{session}', [CourseController::class, 'gotoStudentsCourseViewPage'])->name('gotoStudentsCourseViewPage')->middleware(StudentMiddleware::class);
+Route::get('/send-reminders', [EmailController::class, 'sendEmailsToAllStudents'])->name('sendReminders');

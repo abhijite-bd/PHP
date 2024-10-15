@@ -9,7 +9,7 @@
     </div>
 
 
-    <p class="mt-2 mb-2 pl-2 font-semibold tracking-tight text-gray-900 dark:text-white">Class Routine</h5>
+    <p class="mt-2 mb-2 pl-2 font-semibold tracking-tight text-gray-900 dark:text-white">Class Routine</h5>   
 
     <div class="mb-4 relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -75,4 +75,16 @@
     </div>
 
 </div>
+<script>
+    // JavaScript to show/hide the reminder input
+    function toggleReminder() {
+        const toggle = document.getElementById('reminder-toggle');
+        const form = document.getElementById('reminder-form');
+        if (toggle.checked) {
+            form.classList.remove('hidden');
+        } else {
+            form.classList.add('hidden');
+        }
+    }
+</script>
 @endsection

@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\StudentCgpaValidation;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ClassReminder;
 
 class DashboardController extends Controller
 {
@@ -454,7 +455,7 @@ class DashboardController extends Controller
         $student = Student::findOrFail($id);
         $studentLevel = $student->level;
         $studentSemester = $student->semester;
-        // dd($student);
+        // dd($user);
         $currentDate = now()->toDateString();
         $schedules = Course_Schedule::join('courses', 'courses_schedule.course_code', '=', 'courses.code')
             ->where('courses.level', $studentLevel)
@@ -462,15 +463,9 @@ class DashboardController extends Controller
             ->select('courses_schedule.*', 'courses.name as course_name')
             ->where('courses_schedule.date', '>=', $currentDate)
             ->get();
+        $reminder = ClassReminder::where('student_id', $user->s_id)->first();
 
-        // Check if any schedules were found
-        // if ($schedules->isEmpty()) {
-        //     return "No schedules found for the student's level and semester.";
-        // }
-
-        // // Return or display the schedules
-        // return $schedules;
-        return view('students.studentcoursesschedule', compact('schedules'));
+        return view('students.studentcoursesschedule', compact('user','schedules', 'reminder'));
     }
 
 
@@ -489,21 +484,16 @@ class DashboardController extends Controller
             ->where('level', $user->level)
             ->where('semester', $user->semester)
             ->get();
-
-        //dd($routines);
-        // Check if routines are retrieved correctly
-        // dd($courses);
         if ($routines->isEmpty()) {
-            // Handle the case where no routines are found
             return view('students.studentDashboard', [
                 'user' => $user,
                 'courses' => $courses,
                 'cs' => $cs,
                 'routines' => collect(), // Pass an empty collection if no routines found
                 'message' => 'No class routines found for your selection.',
+                'reminder' => null,
             ]);
         }
-
         return view('students.studentDashboard', [
             'routines' => $routines,
             'user' => $user,

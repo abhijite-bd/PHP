@@ -10,8 +10,9 @@ use App\Models\ClassRoutine;
 class ClassRoutineController extends Controller
 {
 
-    public function uploadPage(Request $request){
-        return view('classRoutine.classRoutine' , [
+    public function uploadPage(Request $request)
+    {
+        return view('classRoutine.classRoutine', [
             'degrees' => ['B.Sc. in CSE', 'B.Sc. in ECE', 'B.Sc. in EEE'],
         ]);
     }
@@ -23,7 +24,7 @@ class ClassRoutineController extends Controller
         foreach ($routineData as $day => $slots) {
             foreach ($slots as $time => $className) {
                 if ($className) {
-                    ClassRoutine::create([                        
+                    ClassRoutine::create([
                         'degree' => $request->degree,
                         'level' => $request->level,
                         'semester' => $request->semester,
