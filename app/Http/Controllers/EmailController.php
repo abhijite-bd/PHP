@@ -16,14 +16,14 @@ class EmailController extends Controller
     public function sendEmailsToAllStudents(Course_Schedule $course_Schedule)
     {
         $user = Session::get('curr_user');
-        dd($user);
 
         $subject = "Reminder for Upcoming Classes";
-
-        // Loop through each student and send the email
-        foreach ($students as $student) {
-            Mail::to($student->email)->send(new StudentReminderMail($subject));
-        }
+        $body = "no body";
+        $students = Student::all();
+        // dd($student);
+        // foreach ($students as $student) {
+        //     Mail::to($student->email)->send(new StudentReminderMail($subject, $body));
+        // }
 
         return back()->with('success', 'Emails sent successfully!');
     }

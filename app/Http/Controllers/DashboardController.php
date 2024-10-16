@@ -21,6 +21,8 @@ use App\Models\StudentCgpaValidation;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ClassReminder;
 use Illuminate\Support\Facades\Http;
+use App\Mail\StudentReminderMail;
+use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
 {
@@ -420,13 +422,29 @@ class DashboardController extends Controller
     public function gotoTeacherClassScheduleStore(Request $request)
     {
         // Validate form input
-        $request->validate([
+        $validatedData = $request->validate([
             'course_code' => 'required|string',
             'date' => 'required|date',
             'day' => 'required|string',
             'time' => 'required|date_format:H:i',
         ]);
+        $course = Course::where('code', $request->course_code)->first();
+        $level = $course->level;
+        $semester = $course->semester;
+        $students = Student::where('level', $level)
+            ->where('semester', $semester)
+            ->get();
+        // dd($students);
+        $subject = "Reminder for Upcoming Classes";
 
+        $courseName = $course->name;
+        $courseCode = $validatedData['course_code'];
+        $date = $validatedData['date'];
+        $time = $validatedData['time'];
+        $day = $validatedData['day'];
+        foreach ($students as $student) {
+            Mail::to($student->email)->send(new StudentReminderMail($courseName, $courseCode, $date, $time, $day,1));
+        }
         // Save the class schedule (assuming a `class_schedules` table exists)
         DB::table('courses_schedule')->insert([
             'course_code' => $request->course_code,
@@ -443,15 +461,29 @@ class DashboardController extends Controller
     public function courses_schedule_destroy($id)
     {
         $schedule = Course_Schedule::findOrFail($id);
-        
-        // Send a request to the 'sendReminders' route
-        Http::get(route('sendReminders', ['schedule' => $schedule]));
-        
+
+        $course = Course::where('code', $schedule->course_code)->first();
+        $level = $course->level;
+        $semester = $course->semester;
+        $students = Student::where('level', $level)
+            ->where('semester', $semester)
+            ->get();
+        $subject = "CLass Has Been Cancelled";
+
+        $courseName = $course->name;
+        $courseCode = $schedule->course_code;
+        $date = $schedule->date;
+        $time = $schedule->time;
+        $day = $schedule->day;
+        foreach ($students as $student) {
+            Mail::to($student->email)->send(new StudentReminderMail($courseName, $courseCode, $date, $time, $day,0));
+        }
+
         $schedule->delete();
-        
+
         return redirect()->route('gotoTeacherClassSchedule')->with('success', 'Course removed successfully.');
     }
-    
+
     public function gotoStudentClassSchedule()
     {
         $user = Session::get('curr_user');

@@ -11,7 +11,8 @@
     <style>
         body {
             position: relative;
-            background-color: #f0f4f8; /* Solid background color */
+            background-color: #f0f4f8;
+            /* Solid background color */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,7 +26,7 @@
             border-radius: 12px;
             overflow: hidden;
             display: flex;
-            width: 700px;
+            width: 800px;
             max-width: 100%;
         }
 
@@ -86,9 +87,10 @@
     <div class="container">
         <div class="left-section">
             <h3 class="text-3xl font-bold">Welcome to EduNexus</h3>
-            <p class="mt-4 text-sm text-white-300"><strong>EduNexus</strong> ensures efficient communication among all users while providing role-based access for privacy and security. Teachers can manage and update course content, while students can track their progress in real-time, leading to a more transparent and organized learning environment. Additionally, the platform's flexibility allows for easy customization to suit the specific needs of the institution.</p>
 
-
+            <div class="flex justify-between items-center mb-8 ">
+                <img src="{{ asset('/images/images.png') }}" alt="Logo" class="w-150 h-400">
+            </div>
             <div class="mt-4">
                 <p class="text-xs text-gray-100">- Made by TeamDev</p>
             </div>
