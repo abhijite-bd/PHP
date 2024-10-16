@@ -8,7 +8,7 @@
             @csrf
             @method('put')
             <div class="logo">
-                <img src="{{ asset('/images/notebook.png') }}" alt="Logo" class="w-8 h-8">
+                <img src="{{ asset('/images/human_logo.png') }}" alt="Logo" class="w-8 h-8">
             </div>
             <h5 class="text-xl font-medium text-gray-900 dark:text-white">Update Teacher</h5>
             @if(\Illuminate\Support\Facades\Session::has('error'))

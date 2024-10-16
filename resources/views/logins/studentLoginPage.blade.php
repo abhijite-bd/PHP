@@ -87,7 +87,7 @@
                 <img src="{{ asset('/images/images.png') }}" alt="Logo" class="w-150 h-400">
             </div>
             <div class="mt-4">
-                <p class="text-xs text-gray-100">- Made by TeamDev</p>
+                <p class="text-xs text-gray-100">- Made by TeamEduNexus</p>
             </div>
         </div>
         <div class="right-section">

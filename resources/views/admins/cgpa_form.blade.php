@@ -1,7 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-<h1 class="text-center text-3xl font-bold mb-8">Result</h1>
+<div class="text-center mb-6">
+    <img src="{{ asset('/images/result.png') }}" alt="Logo" class="w-16 h-16 mx-auto mb-4">
+    <h1 class="text-center text-3xl font-bold mb-8">Result</h1>
+</div>
 
 <!-- Display CGPA Result -->
 @if (isset($result))

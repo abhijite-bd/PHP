@@ -8,7 +8,7 @@
             @csrf
             @method('put')
             <div class="text-center mb-6">
-                <img src="{{ asset('/images/notebook.png') }}" alt="Logo" class="w-16 h-16 mx-auto mb-4">
+                <img src="{{ asset('/images/human_logo.png') }}" alt="Logo" class="w-16 h-16 mx-auto mb-4">
                 <h5 class="text-2xl font-medium text-gray-900 dark:text-white">Update Student</h5>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">

@@ -10,8 +10,11 @@
 </head>
 
 <body>
+    <div class="text-center mb-6">
+        <img src="{{ asset('/images/result.png') }}" alt="Logo" style="width: 3rem; height: 3rem;">
+        <h1 class="text-center text-3xl font-bold mb-8">Result</h1>
+    </div>
     <div class="container mt-8">
-        <h1 class="text-center mb-4">My Result</h1>
         @if (isset($result))
         <div class="alert alert-info text-center">
             <strong>CGPA:</strong> {{ number_format($result, 3) }}

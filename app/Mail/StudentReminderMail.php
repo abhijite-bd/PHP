@@ -41,7 +41,7 @@ class StudentReminderMail extends Mailable
     {
         if ($this->add == 1) {
             return $this->view('student_remainder_add')
-                ->subject("Class Has Been Cancelled")
+                ->subject("Class Has Been Scheduled")
                 ->with([
                     'courseName' => $this->courseName,
                     'courseCode' => $this->courseCode,

@@ -3,7 +3,10 @@
 @section('content')
 
 <div class="container mx-auto mt-5 px-4 md:px-8">
-    <h1 class="block text-3xl font-semibold mb-6 text-center">Exam Schedule</h1>
+    <div class="text-center mb-6">
+        <img src="{{ asset('/images/result.png') }}" alt="Logo" class="w-16 h-16 mx-auto mb-4">
+        <h1 class="text-center text-3xl font-bold mb-8">Exam Schedule</h1>
+    </div>
     <div class="flex justify-center mt-8">
 
         <!-- Filter Form -->

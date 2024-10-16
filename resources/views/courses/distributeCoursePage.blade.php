@@ -6,7 +6,7 @@
     <div class="w-full max-w-4xl p-6 bg-white border border-gray-200 rounded-lg shadow sm:p-8 md:p-10 dark:bg-gray-800 dark:border-gray-700">
         <form class="space-y-6" action="{{ route('distributeCourse') }}" method="POST">
             <div class="text-center mb-6">
-                <img src="{{ asset('/images/notebook.png') }}" alt="Logo" class="w-16 h-16 mx-auto mb-4">
+                <img src="{{ asset('/images/book.jpg') }}" alt="Logo" class="w-16 h-16 mx-auto mb-4">
                 <h5 class="text-2xl font-medium text-gray-900 dark:text-white">Distribute Course</h5>
             </div>
             @csrf

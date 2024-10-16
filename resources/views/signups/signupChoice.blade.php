@@ -78,12 +78,12 @@
 
             
             <div class="mt-4">
-                <p class="text-xs text-gray-100">- Made by TeamDev</p>
+                <p class="text-xs text-gray-100">- Made by TeamEduNexus</p>
             </div>
         </div>
         <div class="right-section">
             <div class="logo mb-8">
-                <img src="/images/notebook.png" alt="Logo">
+                <img src="/images/book.jpg" alt="Logo">
             </div>
             <h2 class="text-2xl font-semibold mb-4 text-center">Sign in</h2>
             <a href="{{ route('gotoStudentSignupPage') }}">Student Signup</a>
