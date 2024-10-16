@@ -15,7 +15,7 @@
 @section('content')
 <div class="container mx-auto">
 
-    <div class="w-full mb-5 p-6 bg-green-300 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full mb-5 p-6 bg-gray-400 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <a href="{{ route('gotoTeachersCoursesPage') }}" class="inline-flex items-center px-3 py-2 mb-4 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <i class="fas fa-arrow-left me-2"></i> All Courses
         </a>

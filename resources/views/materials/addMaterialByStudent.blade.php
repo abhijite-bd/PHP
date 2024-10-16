@@ -10,7 +10,7 @@
 @section('content')
 <div class="container mx-auto">
 
-    <div class="w-full mb-5 p-6 bg-green-300 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full mb-5 p-6 bg-gray-400 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Materials</h5>
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">You can save materials for yourself from here.</p>
     </div>

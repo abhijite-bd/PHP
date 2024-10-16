@@ -11,41 +11,25 @@
     <style>
         body {
             position: relative;
-            background: url('/images/ready-back-school.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background-color: #f0f4f8; /* Solid background color */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-        }
-
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            /* Adjust the opacity as needed */
-            z-index: 1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .container {
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            background-color: #6b72;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
             overflow: hidden;
             display: flex;
-            width: 900px;
+            width: 700px;
             max-width: 100%;
-            z-index: 2;
-            /* Make sure the container is above the overlay */
         }
 
         .left-section {
-            background-color: #057A55;
-            color: white;
             padding: 40px;
             flex: 1;
             display: flex;
@@ -62,14 +46,38 @@
             align-items: center;
         }
 
-        .right-section form {
-            max-width: 300px;
+        .right-section a {
+            margin: 10px 0;
+            padding: 12px 24px;
+            display: block;
             width: 100%;
+            text-align: center;
+            background-color: #4e63ea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
         }
 
-        .logo img {
-            width: 50px;
-            height: 50px;
+        .right-section a:hover {
+            background-color: #3b4bb5;
+        }
+
+        .right-section .logo img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .right-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .version-text {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #6b7280;
         }
     </style>
 </head>
@@ -87,14 +95,11 @@
         </div>
         <div class="right-section">
             <div class="logo mb-8">
-                <img src="/images/notebook.png" alt="Logo">
             </div>
             <h2 class="text-2xl font-semibold mb-4 text-center">Sign in</h2>
             <a href="{{ route('gotoStudentLoginPage') }}">Student Login</a>
             <a href="{{ route('gotoTeacherLoginPage') }}">Teacher Login</a>
             <a href="{{ route('gotoAdminLoginPage') }}">Admin Login</a>
-            <a href="{{ route('gotoSignupChoicePage') }}">Signup</a>
-
             <div class="mt-10 text-center">
                 <p class="text-xs text-gray-400">Web App Version: 1.0.0</p>
             </div>

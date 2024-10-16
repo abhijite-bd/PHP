@@ -14,7 +14,7 @@ class CourseController extends Controller
 {
     public function gotoAddCoursePage()
     {
-        return view('courses.addCoursePage' , [
+        return view('courses.addCoursePage', [
             'degrees' => ['B.Sc. in CSE', 'B.Sc. in ECE', 'B.Sc. in EEE'],
         ]);
     }
@@ -31,19 +31,23 @@ class CourseController extends Controller
             'credit_hour' => 'required',
         ]);
         try {
+            $existingCourse = Course::where('code', $request->code)
+                ->first();
+            if ($existingCourse) {
+                return redirect()->back()->with('error', "{$request->code} has already added before!");
+            } else {
+                $course = Course::create([
+                    'code' => $request->code,
+                    'name' => $request->name,
+                    'level' => $request->level,
+                    'semester' => $request->semester,
+                    'type' => $request->type,
+                    'degree' => $request->degree,
+                    'credit_hour' => $request->credit_hour,
+                ]);
 
-            $course = Course::create([
-                'code' => $request->code,
-                'name' => $request->name,
-                'level' => $request->level,
-                'semester' => $request->semester,
-                'type' => $request->type,
-                'degree' => $request->degree,
-                'credit_hour' => $request->credit_hour,
-            ]);
-
-            return redirect()->back()->with('success', "Course added successfully!");
-            
+                return redirect()->back()->with('success', "Course added successfully!");
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -53,7 +57,7 @@ class CourseController extends Controller
     {
         $courses = Course::all();
         $teachers = Teacher::all();
-        return view('courses.distributeCoursePage' , [
+        return view('courses.distributeCoursePage', [
             'courses' => $courses,
             'teachers' => $teachers,
         ]);
@@ -66,19 +70,19 @@ class CourseController extends Controller
             'teacher' => 'required',
             'session' => 'required',
         ]);
-    
+
         try {
             // Check if the distribution already exists
             $existingDistribution = Distribution::where('course', $request->course)
-                                                ->where('session', $request->session)
-                                                ->first();
-    
+                ->where('session', $request->session)
+                ->first();
+
             if ($existingDistribution) {
                 // Update the existing distribution with the new teacher
                 $existingDistribution->update([
                     'teacher' => $request->teacher,
                 ]);
-    
+
                 return redirect()->back()->with('success', "{$request->course} has been updated for session {$request->session}!");
             } else {
                 // Create a new distribution if it doesn't exist
@@ -87,16 +91,15 @@ class CourseController extends Controller
                     'teacher' => $request->teacher,
                     'session' => $request->session,
                 ]);
-    
+
                 return redirect()->back()->with('success', "{$request->course} has been distributed successfully!");
             }
-            
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
-    
-    
+
+
 
     public function gotoTeachersCoursesPage()
     {
@@ -106,7 +109,7 @@ class CourseController extends Controller
         $courses = Distribution::where('teacher', $user_email)->get();
         $cs = Course::all();
         //dd($courses);
-        return view('teachers.teacherCourses' , [
+        return view('teachers.teacherCourses', [
             'courses' => $courses,
             'cs' => $cs,
         ]);
@@ -115,7 +118,7 @@ class CourseController extends Controller
     public function gotoStudentCoursesPage()
     {
         $user = Session::get('curr_user');
-        $courses = Course::where('degree', $user->degree)->where('level', $user->level)->where('semester', $user->semester)->get();       
+        $courses = Course::where('degree', $user->degree)->where('level', $user->level)->where('semester', $user->semester)->get();
 
         return view('students.studentCourses', [
             'courses' => $courses,
@@ -128,24 +131,24 @@ class CourseController extends Controller
         $course = Course::where('code', $code)->first();
         $materials = Material::where('course_code', $code)->where('session', $session)->get();
         $assignments = Assignment::where('course_code', $code)->where('session', $session)->get();
-        return view('courses.teacherCourseView' , [
+        return view('courses.teacherCourseView', [
             'course' => $course,
             'session' => $session,
             'materials' => $materials,
-            'assignments' => $assignments, 
+            'assignments' => $assignments,
         ]);
-    }    
+    }
 
     public function gotoStudentsCourseViewPage($code, $session)
     {
         $course = Course::where('code', $code)->first();
         $materials = Material::where('course_code', $code)->where('session', $session)->get();
         $assignments = Assignment::where('course_code', $code)->where('session', $session)->get();
-        return view('courses.studentCourseView' , [
+        return view('courses.studentCourseView', [
             'course' => $course,
             'session' => $session,
             'materials' => $materials,
-            'assignments' => $assignments, 
+            'assignments' => $assignments,
         ]);
     }
 }

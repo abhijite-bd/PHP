@@ -4,7 +4,7 @@
 <div class="container mx-auto">
     
 
-    <div class="w-full mb-5 p-6 bg-green-300 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full mb-5 p-6 bg-gray-400 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <img src="{{ asset('images/assigned.png') }}" class="h-10 w-10 mb-2" alt="Logo" />
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Courses</h5>
         

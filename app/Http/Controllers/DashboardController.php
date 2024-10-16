@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use App\Models\StudentCgpaValidation;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ClassReminder;
+use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
 {
@@ -361,7 +362,7 @@ class DashboardController extends Controller
     public function destroyteacher(Teacher $teacher)
     {
         $teacher->delete();
-        return redirect(route('gotoAdminTeacher'))->with('success', 'teacher Deleted Successfully');
+        return redirect(route('gotoAdminTeacher'))->with('success', 'Teacher Deleted Successfully');
     }
 
     public function destroycourse(Course $course)
@@ -396,9 +397,12 @@ class DashboardController extends Controller
         $courses = DB::table('courses')->get(['code', 'name']);
         $currentDate = now()->toDateString();
 
-        DB::table('courses_schedule')->where('date', '<', Carbon::today())->delete();
+        $matchedCourses = DB::table('distributions')
+            ->where('teacher', $email) // Assuming 'teacher' is the column name for emails
+            ->pluck('course'); // This retrieves a collection of course codes
 
         $scheduledCourses = DB::table('courses_schedule')
+            ->whereIn('course_code', $matchedCourses->toArray()) // Use whereIn with the matched courses
             ->join('courses', 'courses_schedule.course_code', '=', 'courses.code')
             ->select('courses_schedule.id', 'courses_schedule.date', 'courses_schedule.day', 'courses_schedule.time', 'courses_schedule.course_code', 'courses.name as course_name')
             ->where('courses_schedule.date', '>=', $currentDate)
@@ -438,15 +442,16 @@ class DashboardController extends Controller
     }
     public function courses_schedule_destroy($id)
     {
-        // Find the scheduled course by ID
         $schedule = Course_Schedule::findOrFail($id);
-
-        // Delete the course
+        
+        // Send a request to the 'sendReminders' route
+        Http::get(route('sendReminders', ['schedule' => $schedule]));
+        
         $schedule->delete();
-
-        // Redirect back with a success message
+        
         return redirect()->route('gotoTeacherClassSchedule')->with('success', 'Course removed successfully.');
     }
+    
     public function gotoStudentClassSchedule()
     {
         $user = Session::get('curr_user');
@@ -465,7 +470,7 @@ class DashboardController extends Controller
             ->get();
         $reminder = ClassReminder::where('student_id', $user->s_id)->first();
 
-        return view('students.studentcoursesschedule', compact('user','schedules', 'reminder'));
+        return view('students.studentcoursesschedule', compact('user', 'schedules', 'reminder'));
     }
 
 

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-4">
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-3xl font-bold">Teacher List</h1>
         <a href="{{ route('gotoTeacherSignupPage') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Add Teacher</a>

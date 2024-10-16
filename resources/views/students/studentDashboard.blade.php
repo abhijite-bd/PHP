@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container mx-auto">
-    <div class="w-full mb-5 p-6 bg-green-300 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div class="container mx-auto px-4 md:px-8">
+    <div class="w-full mb-5 p-6 bg-gray-400 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <h5 class="mt-2 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{$user->name}}</h5>
         <p class="mb-3 font-semibold text-gray-700 dark:text-gray-400">{{$user->degree}}</p>
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Level: {{$user->level}}, Semester: {{$user->semester}}, Session: {{$user->session}}</p>

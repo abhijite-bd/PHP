@@ -19,7 +19,7 @@ class SignupController extends Controller
 
     public function gotoStudentSignupPage()
     {
-        return view('signups.studentSignupPage' , [
+        return view('signups.studentSignupPage', [
             'degrees' => ['B.Sc. in CSE', 'B.Sc. in ECE', 'B.Sc. in EEE'],
         ]);
     }
@@ -33,7 +33,7 @@ class SignupController extends Controller
     {
         $faculties = Faculty::all();
         $departments = Department::all();
-        return view('signups.teacherSignupPage' , [
+        return view('signups.teacherSignupPage', [
             'faculties' => $faculties,
             'departments' => $departments,
             'designations' => ['Lecturer', 'Assistant Professor', 'Associate Professor', 'Professor'],
@@ -53,21 +53,24 @@ class SignupController extends Controller
             'password' => 'required',
         ]);
         try {
-
-            $student = Student::create([
-                's_id' => $request->s_id,
-                'name' => $request->name,
-                'level' => $request->level,
-                'semester' => $request->semester,
-                'session' => $request->session,
-                'degree' => $request->degree,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'Student',
-            ]);
-
-            return redirect()->back()->with('success', "Student added successfully!");
-            
+            $existingstu = Student::where('s_id', $request->s_id)
+                ->first();
+            if ($existingstu) {
+                return redirect()->back()->with('error', "{$request->s_id} has already added before!");
+            } else {
+                $student = Student::create([
+                    's_id' => $request->s_id,
+                    'name' => $request->name,
+                    'level' => $request->level,
+                    'semester' => $request->semester,
+                    'session' => $request->session,
+                    'degree' => $request->degree,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'role' => 'Student',
+                ]);
+                return redirect()->back()->with('success', "Student added successfully!");
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -81,16 +84,20 @@ class SignupController extends Controller
             'password' => 'required',
         ]);
         try {
+            $existingadmin = Admin::where('email', $request->email)
+                ->first();
+            if ($existingadmin) {
+                return redirect()->back()->with('error', "{$request->name} has already added before!");
+            } else {
+                $admin = Admin::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'role' => 'Admin',
+                ]);
 
-            $admin = Admin::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'Admin',
-            ]);
-
-            return redirect()->back()->with('success', "Admin added successfully!");
-            
+                return redirect()->back()->with('success', "Admin added successfully!");
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -107,19 +114,23 @@ class SignupController extends Controller
             'password' => 'required',
         ]);
         try {
+            $existingteacher = Teacher::where('email', $request->email)
+                ->first();
+            if ($existingteacher) {
+                return redirect()->back()->with('error', "{$request->name} has already added before!");
+            } else {
+                $teacher = Teacher::create([
+                    'name' => $request->name,
+                    'department' => $request->department,
+                    'faculty' => $request->faculty,
+                    'designation' => $request->designation,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'role' => 'Teacher',
+                ]);
 
-            $teacher = Teacher::create([
-                'name' => $request->name,
-                'department' => $request->department,
-                'faculty' => $request->faculty,
-                'designation' => $request->designation,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'Teacher',
-            ]);
-
-            return redirect()->back()->with('success', "Teacher added successfully!");
-            
+                return redirect()->back()->with('success', "Teacher added successfully!");
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
