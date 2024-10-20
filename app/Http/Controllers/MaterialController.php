@@ -92,7 +92,7 @@ class MaterialController extends Controller
         $material = \App\Models\Material::findOrFail($id);
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'string',
+            'description' => 'nullable|string',
         ]);
         //file ta niye kaj ache
 

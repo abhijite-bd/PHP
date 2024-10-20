@@ -29,7 +29,7 @@ class AssignmentController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'string',
+            'description' => 'nullable|string',
             'deadline' => 'required|date_format:m/d/Y',
         ]);
 
@@ -131,7 +131,7 @@ class AssignmentController extends Controller
         $assignment = \App\Models\Assignment::findOrFail($id);
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'string',
+            'description' => 'nullable|string',
             'deadline' => 'required',
         ]);
         //file ta niye kaj ache

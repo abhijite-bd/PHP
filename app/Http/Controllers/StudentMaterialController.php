@@ -29,7 +29,7 @@ class StudentMaterialController extends Controller
         $user = Session::get('curr_user');
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'string',
+            'description' => 'nullable|string',
         ]);
 
         $materialFilePath = $this->uploadFile($request, 'file', 'public/materialFile');
@@ -103,7 +103,7 @@ class StudentMaterialController extends Controller
         $material = \App\Models\StudentMaterial::findOrFail($id);
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'string',
+            'description' => 'nullable|string',
         ]);
         //file ta niye kaj ache
 
